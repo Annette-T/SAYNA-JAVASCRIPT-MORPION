@@ -1,119 +1,79 @@
-       var grid = ["item1", "item2", "item3", "item4", "item5", "item6", "item7", "item8", "item9"];
-       var arr1 = []; 
-       var arr2 = [];
-       var arr3 = [];
-       var arr4 = [];
-       var arr5 = [];
-       var arr6 = [];
-       var arr7 = [];
-       var arr8 = [];
-       var success;
-       var gameOver = false;
-       var arr = [];
-       var clicked = 0;
-       var choice = 9;
-       var playerScore = 0;
-       var cpuScore = 0;
-       var player = {
-           name: "Player1",
-           team: "",
-           arr : []
-       };
-       var cpu = {
-           name : "computer",
-           team:"",
-           arr : []
-       };
-
-       $(".cpu-score").html(cpuScore);
-       $(".you-score").html(playerScore);
-
-       function findElement(check){
-           arr1 = ["item1", "item2", "item3"];
-           arr2 = ["item4", "item5", "item6"];
-           arr3 = ["item7", "item8", "item9"];
-           arr4 = ["item1", "item4", "item7"];
-           arr5 = ["item2", "item5", "item8"];
-           arr6 = ["item3", "item6", "item9"];
-           arr7 = ["item1", "item5", "item9"];
-           arr8 = ["item3", "item5", "item7"];
-
-           success;
-
-           switch (true) {
-               case success = arr1.every(function(val) {
-                   return check.arr.indexOf(val) !== -1;
-               }):
-
-               gameOver = true;
-               winning(arr1);
-               setTimeout(on, 700, check.name);
-               break;
-
-               case success = arr2.every(function(val) {
-                   return check.arr.indexOf(val) !== -1;
-               }):
-
-               gameOver = true;
-               winning(arr2);
-               setTimeout(on, 700, check,name);
-               break;
-
-               case success = arr3.every(function(val){
-                   return check.arr.indexOf(val) !== -1;
-               }):
-
-               gameOver = true;
-               winning(arr3);
-               setTimeout(on, 700, check.name);
-               break;
-
-               case success = arr4.every(function(val){
-                   return check.arr.indexOf(val) !== -1;
-               }):
-               gameOver = true;
-               winning(arr4);
-               setTimeout(on, 700, check.name);
-               break;
+let etat = document.querySelectorAll(".grid-item") 
 
 
-               
+const PLAYER = prompt("player:") 
 
-                
+const BOT = prompt("bot:")
+
+let end = false 
+
+function choiseCase(id) {
+    update(id[id.length - 1]);
+}
+
+//La on va afficher les fonctions lors du changement dans toutes les id
+//il ya deux code pour verifier le gagnant: checkWin(PLAYER) et checkWin(BOT)
+function update(id) {  
+    if (etat[id - 1].innerText != "") return
+    etat[id - 1].innerText = PLAYER
+    checkWin(PLAYER)  
+
+    if(end) return 
+    else {
+        playBot() 
+        checkWin(BOT) 
+    } 
+}
 
 
-               }
-           }
-       }
+function playBot() // ce code encadre le BOT dans la fonction avec des conditions  
+{
+    let choixRobot
+    do {
+        choixRobot = parseInt(Math.random() * 9)  
+    } while (etat[choixRobot].innerText != "")
+    etat[choixRobot].innerText = BOT
+}
 
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           (function() {
+
+("X" == "X" == "X") && ("X" != "X")
+
+function checkWin(winner) {
+    let newTab = []
+    etat.forEach(e => newTab.push(e.innerText))
     
-                // Récupération des cases à clicker
-                const items = document.getElementsByClassName('grid-item');
-    
-                function choiseCase(id) {
-    
-                }
-    
-                // Vide le contenu de toute les cases
-                function rest() {
-                    for (var i = 0; i < items.length; i++) {
-                        console.log(items[i]);
-                        items[i].textContent = ''
-                    }
-                }
-    
-            })();
+    if(
+        (newTab[0] === newTab[1] && newTab[1] === newTab[2] && newTab[2] != "") ||
+        (newTab[0] === newTab[3] && newTab[3] === newTab[6] && newTab[6] != "") ||
+        (newTab[0] === newTab[4] && newTab[4] === newTab[8] && newTab[8] != "") ||
+        (newTab[1] === newTab[4] && newTab[4] === newTab[7] && newTab[7] != "") ||
+        (newTab[2] === newTab[5] && newTab[5] === newTab[8] && newTab[8] != "") ||
+        (newTab[2] === newTab[4] && newTab[4] === newTab[6] && newTab[6] != "") ||
+        (newTab[3] === newTab[4] && newTab[4] === newTab[5] && newTab[5] != "") ||
+        (newTab[6] === newTab[7] && newTab[7] === newTab[8] && newTab[8] != "") 
+        ) {
+
+        alert(`WINNER ${winner} `)
+        upScore(winner) 
+        end = true
+        reset()
+    }
+}
+
+function upScore(winner) 
+{
+    if(winner == PLAYER) document.getElementById('P').innerText = parseInt(document.getElementById('P').innerText) + 1
+    if(winner == BOT) document.getElementById('B').innerText = parseInt(document.getElementById('B').innerText) + 1
+}
+
+function reset()
+
+ {
+    end = false
+    for (let i = 0;i< etat.length;i++) {
+        etat[i].innerText = ""
+    }
+    document.getElementById('P').innerText = 0
+    document.getElementById('B').innerText = 0
+}
+
